@@ -164,7 +164,7 @@ public class MainMenu
         int x = (int)Math.Round(Program.ScreenSize / (float)(_numberOfPools + 1) * (poolIndex + 1) - VotePoolWidth / 2f);
         Utility.DrawRectangle(x, VotePoolYPos, VotePoolWidth, VotePoolHeight + 2, color);
         Utility.DrawRectangle(x + 1, VotePoolYPos + 1, VotePoolWidth - 2, VotePoolHeight, Program.Black);
-        FontUtility.DrawString(x - VotePoolWidth/2, VotePoolYPos + VotePoolHeight + 4, gameName, Program.LowRough, Program.White);
+        FontUtility.DrawString(x + (VotePoolWidth - ((Program.LowRough.FontData.dimensions[0] * gameName.Length) + (gameName.Length - 1))) / 2, VotePoolYPos + VotePoolHeight + 4, gameName, Program.LowRough, Program.White);
     }
 
     void DrawPoolVote(int poolIndex, int voteIndex, byte[] color)
