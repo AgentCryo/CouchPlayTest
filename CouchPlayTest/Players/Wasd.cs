@@ -1,7 +1,7 @@
 using System.Numerics;
-using CouchPlayTest.Interfaces;
+using CouchPlayTest.Utilities;
 using Raylib_cs;
-using Transform = CouchPlayTest.Interfaces.Transform;
+using Transform = CouchPlayTest.Utilities.Transform;
 
 namespace CouchPlayTest.Players;
 
@@ -27,6 +27,11 @@ public class Wasd : Player
         if(Raylib.IsKeyDown(KeyboardKey.S)) input.Y = 2;
         if(Raylib.IsKeyDown(KeyboardKey.A)) input.X = -2;
         if(Raylib.IsKeyDown(KeyboardKey.D)) input.X = 2;
-        return Vector2.Normalize(input);
+        return input == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(input);
+    }
+    
+    public override bool GetSpecialInput()
+    {
+        return Raylib.IsKeyDown(KeyboardKey.Space);
     }
 }

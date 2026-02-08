@@ -5,7 +5,7 @@ namespace CouchPlayTest.Drawing.Font;
 
 public static class FontUtility
 {
-    static HashSet<char> _unrecognizedCharacters = new HashSet<char>();
+    static HashSet<char> _unrecognizedCharacters = [];
     static readonly Dictionary<char, int> CharacterMap = new Dictionary<char, int>()
     {
         {'A',  0 }, {'B', 1 }, {'C', 2 },
@@ -43,7 +43,7 @@ public static class FontUtility
         Bitmap fontAtlas = (Bitmap)Image.FromFile(fontPath);
         byte[] fontAtlasBytes = Utility.GetPixelData(fontAtlas);
 
-        List<byte[]> characterSet = new();
+        List<byte[]> characterSet = [];
 
         for (float i = 0; i < CharacterMap.Count-1; i++) {
             byte[] character = new byte[dimensions[0]*dimensions[1]];
@@ -76,12 +76,12 @@ public static class FontUtility
 
     static void DrawCharacter(int x, int y, int c, Font font, byte[] color)
     {
-        for (int i = 0; i < font.fontData.dimensions[0] * font.fontData.dimensions[1]; i++) {
-            byte charColor = (byte)(font.fontData.characterSet[c][i] / 255);
+        for (int i = 0; i < font.FontData.dimensions[0] * font.FontData.dimensions[1]; i++) {
+            byte charColor = (byte)(font.FontData.characterSet[c][i] / 255);
             Utility.DrawPixel(
-                i%font.fontData.dimensions[0] + x, 
-                i/font.fontData.dimensions[0] + y, 
-                [(byte)(charColor * color[0]), (byte)(charColor * color[1]), (byte)(charColor * color[2])]);
+                i%font.FontData.dimensions[0] + x, 
+                i/font.FontData.dimensions[0] + y, 
+                [(byte)(charColor * color[0]), (byte)(charColor * color[1]), (byte)(charColor * color[2]), (byte)(charColor*255)]);
         }
     }
 
@@ -96,7 +96,7 @@ public static class FontUtility
                 Console.WriteLine("Warning: \'" + c + "\' is not a recognized character.");
                 _unrecognizedCharacters.Add(c);
             }
-            DrawCharacter((byte)(x + (font.fontData.dimensions[0] + 1) * index++), y, charId, font, color);
+            DrawCharacter((byte)(x + (font.FontData.dimensions[0] + 1) * index++), y, charId, font, color);
         }
     }
     #endregion

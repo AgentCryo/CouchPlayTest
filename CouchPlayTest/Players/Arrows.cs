@@ -1,7 +1,7 @@
 using System.Numerics;
-using CouchPlayTest.Interfaces;
+using CouchPlayTest.Utilities;
 using Raylib_cs;
-using Transform = CouchPlayTest.Interfaces.Transform;
+using Transform = CouchPlayTest.Utilities.Transform;
 
 namespace CouchPlayTest.Players;
 
@@ -27,6 +27,11 @@ public class Arrows : Player
         if(Raylib.IsKeyDown(KeyboardKey.Down)) input.Y = 2;
         if(Raylib.IsKeyDown(KeyboardKey.Left)) input.X = -2;
         if(Raylib.IsKeyDown(KeyboardKey.Right)) input.X = 2;
-        return Vector2.Normalize(input);
+        return input == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(input);
+    } 
+
+    public override bool GetSpecialInput()
+    {
+        return Raylib.IsKeyDown(KeyboardKey.RightControl);
     }
 }

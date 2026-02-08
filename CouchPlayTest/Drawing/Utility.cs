@@ -1,9 +1,9 @@
 using Raylib_cs;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Color = Raylib_cs.Color;
-using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
 namespace CouchPlayTest.Drawing;
 #pragma warning disable CA1416
@@ -14,14 +14,14 @@ public static class Utility
     {
         Raylib.DrawRectangle(x*Program.PixelScale, y*Program.PixelScale, 
             Program.PixelScale, Program.PixelScale,
-            new Color(color[0], color[1], color[2]));
+            new Color(color[0], color[1], color[2], color[3]));
     }
 
     public static void DrawRectangle(int x, int y, int width, int height, byte[] color)
     {
         Raylib.DrawRectangle(x*Program.PixelScale, y*Program.PixelScale, 
             Program.PixelScale*width, Program.PixelScale*height,
-            new Color(color[0], color[1], color[2]));
+            new Color(color[0], color[1], color[2], color[3]));
     }
 
     public static bool WithinBounds(int xA, int xB)
@@ -40,5 +40,20 @@ public static class Utility
         } finally {
             bitmap.UnlockBits(bitmapData);
         } 
+    }
+    
+    public static int GetTextCenteredTextPos(string text, Font.Font font)
+    {
+        return Program.ScreenSize / 2 - ((font.FontData.dimensions[0] * text.Length) + (text.Length - 1)) / 2;
+    }
+    
+    public static Vector2 ClampMagnitude(Vector2 v, float maxLength)
+    {
+        var magnitude = (float)Math.Sqrt(v.X * v.X + v.Y * v.Y);
+
+        if (!(magnitude > maxLength) || !(magnitude > 0)) return new Vector2(v.X, v.Y);
+        var scale = maxLength / magnitude;
+        return new Vector2(v.X * scale, v.Y * scale);
+
     }
 }

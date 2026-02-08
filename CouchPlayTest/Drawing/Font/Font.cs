@@ -1,13 +1,7 @@
 namespace CouchPlayTest.Drawing.Font;
 
-public struct Font
+public struct Font(string fontFilePath)
 {
-    public string fontFilePath;
-    public (int[] dimensions, List<byte[]> characterSet) fontData;
-
-    public Font(string fontFilePath)
-    {
-        this.fontFilePath = fontFilePath;
-        fontData = FontUtility.GetCharacterSet(fontFilePath);
-    }
+    public string FontFilePath = fontFilePath;
+    public (int[] dimensions, List<byte[]> characterSet) FontData = FontUtility.GetCharacterSet(fontFilePath);
 }

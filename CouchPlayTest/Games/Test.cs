@@ -5,7 +5,7 @@ using CouchPlayTest.Utilities;
 
 namespace CouchPlayTest.Games;
 
-public class Squares(Player[] players) : Game(players, "Squares")
+public class Test(Player[] players) : Game(players, "Test")
 {
     readonly Player[] _players = players;
     
@@ -13,15 +13,13 @@ public class Squares(Player[] players) : Game(players, "Squares")
     {
         foreach (var player in _players) {
             player.Update(delta);
-            player.Transform.Position += player.GetInput();
         }
     }
     public override void Render()
     {
         foreach (var player in _players) {
             player.Render();
-            player.DrawPlayer();
         }
-        FontUtility.DrawString(Utility.GetTextCenteredTextPos("Welcome to Squares!", Program.LowRough), 10, "Welcome to Squares!", Program.LowRough, Program.Cyan);
+        FontUtility.DrawString(Utility.GetTextCenteredTextPos("Welcome to Test!", Program.LowRough), 10, "Welcome to Test!", Program.LowRough, Program.Cyan);
     }
 }

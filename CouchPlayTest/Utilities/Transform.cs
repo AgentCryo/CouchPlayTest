@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace CouchPlayTest.Interfaces;
+namespace CouchPlayTest.Utilities;
 
 public struct Transform(Vector2 position)
 {

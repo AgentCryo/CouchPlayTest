@@ -1,18 +1,33 @@
 using System.Data;
 using System.Numerics;
+using CouchPlayTest.Drawing;
 
-namespace CouchPlayTest.Interfaces;
+namespace CouchPlayTest.Utilities;
 
 public abstract class Player(byte[] color)
 {
+    public readonly byte[] Color = color;
+    
+    public int MenuVotePoolIndex;
+    public double MenuDelay;
+    public double MenuVoteDelay;
+    public bool MenuVotedRecently = false;
+    public bool MenuMoved = false;
+    public int MenuVoted = -1;
+
     public Transform Transform;
     
-    public int VotePoolIndex;
-    public double MenuDelay;
-    public bool MenuHasMoved = false;
-    public byte[] Color = color;
     public abstract void Update(double deltaTime);
     public abstract void Render();
-
+    public virtual void DrawPlayer()
+    {
+        var scaleX = 6 * Transform.Scale.X;   
+        var scaleY = 6 * Transform.Scale.Y;   
+        var x = (int)(Transform.Position.X - scaleX / 2);
+        var y = (int)(Transform.Position.Y - scaleY / 2);
+        Utility.DrawRectangle(x, y, (int)scaleX, (int)scaleY, color);
+        Utility.DrawRectangle(x + 1, y + 1, (int)scaleX - 2, (int)scaleY - 2, [0, 0, 0, 255]);
+    }
     public abstract Vector2 GetInput();
+    public abstract bool GetSpecialInput();
 }
