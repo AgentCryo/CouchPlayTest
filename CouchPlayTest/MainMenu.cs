@@ -8,6 +8,7 @@ using CouchPlayTest.Utilities.UI;
 using Raylib_cs;
 using static CouchPlayTest.Utilities.UI.UiInteractable;
 using Font = CouchPlayTest.Drawing.Font.Font;
+using Transform = CouchPlayTest.Utilities.Transform;
 
 namespace CouchPlayTest;
 
@@ -104,6 +105,8 @@ public class MainMenu
         
         #endregion
 
+        if(Players.Count == 0 || _playersVoted == Players.Count) return;
+        
         #region VotingSelection
         
         var votingSelection = player.Ui["VotingSelection"].UpdateInputSelection(player, deltaTime, UiAxis.X, (0, _numberOfPools-1), player.VotePoolIndex, true);
@@ -150,6 +153,11 @@ public class MainMenu
         //Resets game variables on return;
         SideMenu.IsOpen = false;
         _selectedGame = null;
+
+        //Todo: Add a proper game/player reset method;
+        foreach (var player in Players) {
+            player.Transform = new Transform(new Vector2(0,0));
+        }
         
         foreach (var ui in Players.SelectMany(player => player.Ui.Values)) {
             ui.Reset();
