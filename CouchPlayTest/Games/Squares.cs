@@ -4,12 +4,10 @@ using CouchPlayTest.Utilities;
 namespace CouchPlayTest.Games;
 
 public class Squares(Player[] players) : Game(players, "Squares")
-{
-    readonly Player[] _players = players;
-    
+{    
     public override void Update(double delta)
     {
-        foreach (var player in _players) {
+        foreach (var player in Players) {
             player.Update(delta);
             player.Transform.Position += player.GetInput();
         }
@@ -17,7 +15,7 @@ public class Squares(Player[] players) : Game(players, "Squares")
 
     public override void Render()
     {
-        foreach (var player in _players) {
+        foreach (var player in Players) {
             player.Render();
             player.DrawPlayer();
         }

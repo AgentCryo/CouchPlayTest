@@ -4,18 +4,16 @@ using CouchPlayTest.Utilities;
 namespace CouchPlayTest.Games;
 
 public class Test(Player[] players) : Game(players, "Test")
-{
-    readonly Player[] _players = players;
-    
+{    
     public override void Update(double delta)
     {
-        foreach (var player in _players)
+        foreach (var player in Players)
             player.Update(delta);
     }
 
     public override void Render()
     {
-        foreach (var player in _players)
+        foreach (var player in Players)
             player.Render();
 
         var text = "Welcome to Test!";
