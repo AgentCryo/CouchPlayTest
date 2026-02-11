@@ -88,7 +88,7 @@ public static class FontUtility
             DrawingUtility.DrawPixel(
                 i%font.FontData.dimensions[0] + x, 
                 i/font.FontData.dimensions[0] + y, 
-                new(charColor * color.R, charColor * color.G, charColor * color.B, color.A));
+                new(charColor * color.R, charColor * color.G, charColor * color.B, charColor * 255));
         }
     }
     
