@@ -1,24 +1,22 @@
 using Color = Raylib_cs.Color;
-using CouchPlayTest.Drawing.Font;
 using CouchPlayTest.Utilities;
 
 namespace CouchPlayTest.Games;
 
 public class Test(Player[] players) : Game(players, "Test")
-{
-    readonly Player[] _players = players;
-    
+{    
     public override void Update(double delta)
     {
-        foreach (var player in _players) {
+        foreach (var player in Players) {
             player.Update(delta);
         }
     }
+
     public override void Render()
     {
-        foreach (var player in _players) {
+        foreach (var player in Players) {
             player.Render();
         }
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Welcome to Test!", Program.LowRough), 10, "Welcome to Test!", Program.LowRough, new Color(0, 255, 255));
+        Program.LowRough.DrawStringCentered(10, "Welcome to Test!", new Color(0, 255, 255));
     }
 }

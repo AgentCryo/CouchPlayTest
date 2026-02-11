@@ -16,10 +16,10 @@ public abstract class Player(Color color)
     public int VotePoolIndex;
     public int Voted = -1;
 
-    public Transform Transform;
+    public Transform Transform = new(Vector2.Zero);
     
-    public abstract void Update(double deltaTime);
-    public abstract void Render();
+    public virtual void Update(double deltaTime) {}
+    public virtual void Render() {}
     public virtual void DrawPlayer()
     {
         //Draws generic player sprite, however games do not have to use this;

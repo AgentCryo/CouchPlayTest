@@ -1,9 +1,7 @@
 using CouchPlayTest.Drawing;
-using CouchPlayTest.Drawing.Font;
 using CouchPlayTest.Utilities;
 using CouchPlayTest.Utilities.UI;
 using Raylib_cs;
-using Font = CouchPlayTest.Drawing.Font.Font;
 
 namespace CouchPlayTest;
 
@@ -103,13 +101,13 @@ public static class SideMenu
         if (!inGame || !IsOpen && _windowAnimation <= 0) return;
         
         DrawingUtility.DrawRectangle(animation.textAnimation-2, 26, animation.xAnimation-6, Program.LowRough.FontData.dimensions[1]+4, new Color(100,100,100));
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Return", Program.LowRough, (animation.textAnimation-2, animation.textAnimation-2+animation.xAnimation-6)),28, "Return", Program.LowRough, Color.White);
+        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("Return", (animation.textAnimation - 2, animation.textAnimation - 2 + animation. xAnimation - 6)), 28, "Return", Color.White);
     }
     
     static (int textAnimation, int xAnimation) RenderWindow(string windowDisplayTitle, int cursorY)
     {
         if (!IsOpen && _windowAnimation <= 0) return (0,0);
-        int windowWidth = FontUtility.GetStringWidth(windowDisplayTitle, Program.LowRough) + 10;
+        int windowWidth = Program.LowRough.GetStringWidth(windowDisplayTitle) + 10;
         int xAnimation = (int)Utility.Lerp(0, windowWidth, (float)_windowAnimation / WindowAnimationTime);
         DrawingUtility.DrawRectangle(0, 0, xAnimation, Program.ScreenSize, new Color(160,160,160,200));
 
@@ -118,10 +116,10 @@ public static class SideMenu
         if(_player != null) DrawingUtility.DrawRectangle(textAnimation-3, cursorY-1, xAnimation-4, Program.LowRough.FontData.dimensions[1]+6, _player.Color);
         
         DrawingUtility.DrawRectangle(textAnimation-2, 8, xAnimation-6, Program.LowRough.FontData.dimensions[1]+4, new Color(100,100,100));
-        FontUtility.DrawString(textAnimation, 10, windowDisplayTitle, Program.LowRough, Color.White);
+        Program.LowRough.DrawString(textAnimation, 10, windowDisplayTitle, Color.White);
         
         DrawingUtility.DrawRectangle(textAnimation-2, Program.ScreenSize-16, xAnimation-6, Program.LowRough.FontData.dimensions[1]+4, new Color(100,100,100));
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Exit", Program.LowRough, (textAnimation-2, textAnimation-2+xAnimation-6)), Program.ScreenSize-16+2, "Exit", Program.LowRough, Color.White);
+        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("Exit", (textAnimation-2, textAnimation-2+xAnimation-6)), Program.ScreenSize-16+2, "Exit", Color.White);
 
         return (textAnimation, xAnimation);
     }

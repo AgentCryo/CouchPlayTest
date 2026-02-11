@@ -17,11 +17,6 @@ public static class DrawingUtility
     //Sets an area of scaled pixels at x to x + width, y to y + height to color;
     public static void DrawRectangle(int x, int y, int width, int height, Color color)
         => Raylib.DrawRectangle(x * Program.PixelScale, y * Program.PixelScale, Program.PixelScale * width, Program.PixelScale * height, color);
-
-    //Checks if an x, y coord is within the screen bounds;
-    public static bool WithinBounds(int xA, int xB)
-        => xA is >= 0 and < Program.ScreenSize && xB is >= 0 and < Program.ScreenSize;
-
     
     //Converts a Bitmap into a byte array. Reason: Much faster, and more recommended than GetPixel();
     public static byte[] GetPixelData(Bitmap bitmap)
@@ -35,5 +30,61 @@ public static class DrawingUtility
         } finally {
             bitmap.UnlockBits(bitmapData);
         } 
+    }
+
+    //Checks if an x, y coord is within the screen bounds;
+    public static bool IsOnScreen(int x, int y)
+        => x >= 0 && x < Program.ScreenSize && y >= 0 && y < Program.ScreenSize;
+
+    //Todo: Comment explanations and optimize.
+    //Unused, maybe used later;
+    //File subject to change and optimizations;
+    //If possible, use raylib functions directly
+    public static void DrawLine(int xA, int yA, int xB, int yB, Color color)
+    {
+        int dx    = Math.Abs(xB - xA);
+        int sx    = xA < xB ? 1 : -1;
+        int dy    = -Math.Abs(yB - yA);
+        int sy    = yA < yB ? 1 : -1;
+        int error = dx + dy;
+
+        while (true) {
+            if(IsOnScreen(xA, yA)) DrawPixel(xA, yA, color);
+            int e2 = error * 2;
+            if (e2 >= dy) {
+                if (xA == xB) break;
+                error += dy;
+                xA += sx;
+            }
+            if (e2 <= dx) {
+                if (yA == yB) break;
+                error += dx;
+                yA += sy;
+            }
+        }
+    }
+
+    public static void DrawCircle(int x, int y, int radius, Color color)
+    {
+        float t1 = radius / 16;
+        int xc = radius; int yc = 0;
+        while (xc > yc) {
+            if(IsOnScreen(xc  + x, yc  + y)) DrawPixel(xc  + x, yc  + y, color);
+            if(IsOnScreen(yc  + x, xc  + y)) DrawPixel(yc  + x, xc  + y, color);
+            if(IsOnScreen(xc  + x, -yc + y)) DrawPixel(xc  + x, -yc + y, color);
+            if(IsOnScreen(yc  + x, -xc + y)) DrawPixel(yc  + x, -xc + y, color);
+            if(IsOnScreen(-xc + x, yc  + y)) DrawPixel(-xc + x, yc  + y, color);
+            if(IsOnScreen(-yc + x, xc  + y)) DrawPixel(-yc + x, xc  + y, color);
+            if(IsOnScreen(-xc + x, -yc + y)) DrawPixel(-xc + x, -yc + y, color);
+            if(IsOnScreen(-yc + x, -xc + y)) DrawPixel(-yc + x, -xc + y, color);
+            
+            yc++;
+            t1 += yc;
+            float t2 = t1 - xc; 
+            if (t2 >= 0) {
+                t1 = t2;
+                xc--;
+            }
+        }
     }
 }

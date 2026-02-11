@@ -5,21 +5,8 @@ using Transform = CouchPlayTest.Utilities.Transform;
 
 namespace CouchPlayTest.Players;
 
-public class Arrows : Player
+public class Arrows() : Player(Color.Green)
 {
-    public Arrows() : base(Color.Green)
-    {
-        Transform = new Transform(Vector2.Zero);
-    }
-    public override void Update(double deltaTime)
-    {
-        
-    }
-    public override void Render()
-    {
-        
-    }
-
     public override Vector2 GetInput()
     {
         Vector2 input = Vector2.Zero;

@@ -1,14 +1,12 @@
-using System.Numerics;
 using CouchPlayTest.Drawing;
-using CouchPlayTest.Drawing.Font;
 using CouchPlayTest.Games;
 using CouchPlayTest.Utilities;
 using CouchPlayTest.Players;
 using CouchPlayTest.Utilities.UI;
 using Raylib_cs;
 using static CouchPlayTest.Utilities.UI.UiInteractable;
-using Font = CouchPlayTest.Drawing.Font.Font;
 using Transform = CouchPlayTest.Utilities.Transform;
+using System.Numerics;
 
 namespace CouchPlayTest;
 
@@ -69,7 +67,7 @@ public class MainMenu
         var mostVotedIndex = Array.IndexOf(votes, votes.Max());
         
         //Makes new game while resting countdown, making sure to close the side menu;
-        _selectedGame = (Activator.CreateInstance(GameTypes[mostVotedIndex], [Players.ToArray()]) as Game);
+        _selectedGame = Activator.CreateInstance(GameTypes[mostVotedIndex], [Players.ToArray()]) as Game;
         _gameCountDown = 0;
         SideMenu.IsOpen = false;
     }
@@ -121,17 +119,20 @@ public class MainMenu
     void RenderMainMenu()
     {
         //Draws text above voting pools: guide to connect, number of players connect, and the title;
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Input UP to connect.", Program.LowRough), 70, "Input UP to connect.", Program.LowRough, Color.White);
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Players Connected: " + _peopleConnected, Program.LowRough), 80, "Players Connected: " + _peopleConnected, Program.LowRough, Color.White);
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos(Program.Title, Program.TitleRough), 90, Program.Title, Program.TitleRough, new Color(160, 255, 255, 255));
+        Program.LowRough.DrawStringCentered(70, "Input UP to connect.", Color.White);
+        Program.LowRough.DrawStringCentered(80, $"Players Connected: {_peopleConnected}", Color.White);
+        Program.TitleRough.DrawStringCentered(90, Program.Title, new Color(160, 255, 255, 255));
 
-        FontUtility.DrawString(10, 200, "Players Voted: " + _playersVoted, Program.LowRough, Color.White);
+        Program.LowRough.DrawString(10, 200, $"Players Voted: {_playersVoted}", Color.White);
 
         //Gets and draws connected players;
-        FontUtility.DrawString(10, 10, "Controllers Connected:", Program.LowRough, Color.White);
-        if (Players.Any(p => p is Wasd)) FontUtility.DrawString(10, 18, "WASD", Program.LowRough, Color.White);
-        if (Players.Any(p => p is Arrows)) FontUtility.DrawString(10, 26, "Arrows", Program.LowRough, Color.White);
-        if (Players.Any(p => p is Controller)) FontUtility.DrawString(10, 34, "Controller", Program.LowRough, Color.White);
+        Program.LowRough.DrawString(10, 10, "Controllers Connected:", Color.White);
+        if (Players.Any(p => p is Wasd)) 
+            Program.LowRough.DrawString(10, 18, "WASD", Color.White);
+        if (Players.Any(p => p is Arrows)) 
+            Program.LowRough.DrawString(10, 26, "Arrows", Color.White);
+        if (Players.Any(p => p is Controller)) 
+            Program.LowRough.DrawString(10, 34, "Controller", Color.White);
 
         for (var g = 0; g < GameTypes.Length; g++)
             DrawVotePool(g, GameTypes[g].Name, Color.White);
@@ -144,8 +145,8 @@ public class MainMenu
 
         //Countdown to game start display;
         DrawingUtility.DrawRectangle(0, Program.ScreenSize / 2 - 40, Program.ScreenSize, 40, new Color(150,150,150,255));
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("All players have voted.", Program.LowRough), Program.ScreenSize / 2 - 33, "All players have voted.", Program.LowRough, Color.White);
-        FontUtility.DrawString(FontUtility.GetStringCenteredPos("Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds.", Program.LowRough), Program.ScreenSize / 2 - 18, "Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds.", Program.LowRough, Color.White);
+        Program.LowRough.DrawStringCentered(Program.ScreenSize / 2 - 33, "All players have voted.", Color.White);
+        Program.LowRough.DrawStringCentered(Program.ScreenSize / 2 - 18, "Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds.", Color.White);
     }
 
     public static void ReturnToMainMenu()
@@ -169,7 +170,7 @@ public class MainMenu
         int x = (int)Math.Round(Program.ScreenSize / (float)(_numberOfPools + 1) * (poolIndex + 1) - VotePoolWidth / 2f);
         DrawingUtility.DrawRectangle(x, VotePoolYPos, VotePoolWidth, VotePoolHeight + 2, color);
         DrawingUtility.DrawRectangle(x + 1, VotePoolYPos + 1, VotePoolWidth - 2, VotePoolHeight, Color.Black);
-        FontUtility.DrawString(x + (VotePoolWidth - ((Program.LowRough.FontData.dimensions[0] * gameName.Length) + (gameName.Length - 1))) / 2, VotePoolYPos + VotePoolHeight + 4, gameName, Program.LowRough, Color.White);
+        Program.LowRough.DrawString(x + (VotePoolWidth - ((Program.LowRough.FontData.dimensions[0] * gameName.Length) + (gameName.Length - 1))) / 2, VotePoolYPos + VotePoolHeight + 4, gameName, Color.White);
     }
 
     void DrawPlayerVote(int poolIndex, int voteIndex, Color color)

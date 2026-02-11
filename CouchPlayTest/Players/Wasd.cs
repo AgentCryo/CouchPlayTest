@@ -5,21 +5,8 @@ using Transform = CouchPlayTest.Utilities.Transform;
 
 namespace CouchPlayTest.Players;
 
-public class Wasd : Player
+public class Wasd() : Player(Color.Red)
 {
-    public Wasd() : base(Color.Red)
-    {
-        Transform = new Transform(Vector2.Zero);
-    }
-    public override void Update(double deltaTime)
-    {
-        
-    }
-    public override void Render()
-    {
-        
-    }
-
     public override Vector2 GetInput()
     {
         Vector2 input = Vector2.Zero;
