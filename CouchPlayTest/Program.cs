@@ -1,5 +1,5 @@
 ﻿using Raylib_cs;
-using Font = CouchPlayTest.Drawing.Font.Font;
+using Font = CouchPlayTest.Drawing.Font;
 
 namespace CouchPlayTest;
 
