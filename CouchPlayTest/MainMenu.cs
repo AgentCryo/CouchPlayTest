@@ -61,7 +61,7 @@ public class MainMenu
         }
         var mostVotedIndex = Array.IndexOf(votes, votes.Max());
         
-        _selectedGame = (Activator.CreateInstance(GameTypes[mostVotedIndex], [Players.ToArray()]) as Game);
+        _selectedGame = Activator.CreateInstance(GameTypes[mostVotedIndex], [Players.ToArray()]) as Game;
         _gameCountDown = 0;
         _playersVoted = 0;
         SideMenu.IsOpen = false;
@@ -101,11 +101,11 @@ public class MainMenu
     
     void RenderMainMenu()
     {
-        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("Input UP to connect."), 70, "Input UP to connect.", Color.White);
-        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("Players Connected: " + _peopleConnected), 80, "Players Connected: " + _peopleConnected, Color.White);
-        Program.TitleRough.DrawString(Program.TitleRough.GetStringCenteredPos(Program.Title), 90, Program.Title, new Color(160, 255, 255, 255));
+        Program.LowRough.DrawStringCentered(70, "Input UP to connect.", Color.White);
+        Program.LowRough.DrawStringCentered(80, "Players Connected: " + _peopleConnected, Color.White);
+        Program.TitleRough.DrawStringCentered(90, Program.Title, new Color(160, 255, 255, 255));
 
-        Program.LowRough.DrawString(10, 200, "Players Voted: " + _playersVoted, Color.White);
+        Program.LowRough.DrawString(10, 200, $"Players Voted: {_playersVoted}", Color.White);
 
         Program.LowRough.DrawString(10, 10, "Controllers Connected:", Color.White);
         if (Players.Any(p => p is Wasd)) 
@@ -125,8 +125,8 @@ public class MainMenu
             return;
 
         DrawingUtility.DrawRectangle(0, Program.ScreenSize / 2 - 40, Program.ScreenSize, 40, new Color(150,150,150,255));
-        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("All players have voted."), Program.ScreenSize / 2 - 33, "All players have voted.", Color.White);
-        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos("Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds."), Program.ScreenSize / 2 - 18, "Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds.", Color.White);
+        Program.LowRough.DrawStringCentered(Program.ScreenSize / 2 - 33, "All players have voted.", Color.White);
+        Program.LowRough.DrawStringCentered(Program.ScreenSize / 2 - 18, "Game Starting in " + (CountDownSeconds - _gameCountDown).ToString("0.0") + " seconds.", Color.White);
     }
 
     public static void ReturnToMainMenu()

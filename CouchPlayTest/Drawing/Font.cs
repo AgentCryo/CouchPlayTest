@@ -98,6 +98,9 @@ public class Font
         }
     }
 
+    public void DrawStringCentered(int y, string str, Color color)
+        => DrawString(GetStringCenteredPos(str), y, str, color);
+
     public int GetStringWidth(string str)
         => FontData.dimensions[0] * str.Length + (str.Length - 1);
     

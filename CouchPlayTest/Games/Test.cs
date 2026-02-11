@@ -19,6 +19,6 @@ public class Test(Player[] players) : Game(players, "Test")
             player.Render();
 
         var text = "Welcome to Test!";
-        Program.LowRough.DrawString(Program.LowRough.GetStringCenteredPos(text), 10, text, new Color(0, 255, 255));
+        Program.LowRough.DrawStringCentered(10, text, new Color(0, 255, 255));
     }
 }
