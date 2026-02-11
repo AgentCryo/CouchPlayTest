@@ -19,7 +19,6 @@ public class Squares(Player[] players) : Game(players, "Squares")
             player.Render();
             player.DrawPlayer();
         }
-        var text = "Welcome to Squares!";
-        Program.LowRough.DrawStringCentered(10, text, new Color(0, 255, 255));
+        Program.LowRough.DrawStringCentered(10, "Welcome to Squares!", new Color(0, 255, 255));
     }
 }
